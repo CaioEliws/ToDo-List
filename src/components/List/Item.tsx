@@ -3,7 +3,11 @@ import { useState } from 'react';
 import { Check, Trash } from '@phosphor-icons/react';
 import styles from './Item.module.css';
 
-export function Item() {
+export interface itemProps {
+    text: string
+}
+
+export function Item({ text }: itemProps) {
     const [isChecked, SetIsChecked] = useState(false);
 
     function handleCheckboxClick() {
@@ -25,7 +29,7 @@ export function Item() {
                     className={`${styles.paragraph} ${isChecked ? styles.paragraphcheked : ''}`}
 
                 >
-                    Integer urna interdum massa libero auctorneque turpis turpis semper. Duis vel sedfames integer.
+                    {text}
                 </p>
 
                 <button className={styles.btnDelete}>
