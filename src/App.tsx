@@ -14,14 +14,24 @@ import './global.css';
 
 import styles from './App.module.css';
 
+export interface TaskProps {
+  id: number
+  text: string
+}
+
 function App() {
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState<TaskProps[]>([])
   const [newTaskText, setNewTaskText] = useState('')
 
   function handleCreateNewTasks() {
     event?.preventDefault()
 
-    setTasks([...tasks, newTaskText])
+    const newTask = {
+      id: tasks.length + 1, // Gere um novo ID para a nova tarefa
+      text: newTaskText // Use o texto atual da nova tarefa
+    };
+
+    setTasks([...tasks, newTask])
     setNewTaskText('')
   }
 
@@ -51,9 +61,21 @@ function App() {
         <div className={styles.tasklist}>
           <ListHeader />
 
-          {tasks.map(task => {
-            return <Item text={task} />
-          })}
+          
+          {tasks.length > 0 ? (
+            <div>
+                {tasks.map(task => {
+                  return (
+                    <Item
+                      // key={}
+                      data={task}
+                    />
+                  )
+                })}
+            </div>
+          ) : (
+            <Empty />
+          )}
 
         </div>
       </div>
