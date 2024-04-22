@@ -26,8 +26,8 @@ function App() {
   function handleCreateNewTasks() {
     event?.preventDefault()
 
-    const newTask = {
-      id: tasks.length + 1, // Gere um novo ID para a nova tarefa
+    const newTask: TaskProps = {
+      id: new Date().getTime(), // Gere um novo ID para a nova tarefa
       text: newTaskText // Use o texto atual da nova tarefa
     };
 
@@ -37,6 +37,16 @@ function App() {
 
   function handleNewTaskChange(event: React.ChangeEvent<HTMLInputElement>) {
     setNewTaskText(event.target.value)
+  }
+
+  function handleDeleteTask(id: number) {
+    const filteredTasks = tasks.filter((task) => task.id !== id)
+
+    if(!confirm('Deseja realmente apagar essa tarefa?')) {
+      return
+    }
+
+    setTasks(filteredTasks)
   }
 
 
@@ -67,8 +77,9 @@ function App() {
                 {tasks.map(task => {
                   return (
                     <Item
-                      // key={}
+                      key={task.id}
                       data={task}
+                      removeTask={handleDeleteTask}
                     />
                   )
                 })}

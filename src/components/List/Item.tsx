@@ -7,9 +7,10 @@ import { TaskProps } from '../../App';
 
 export interface itemProps {
     data: TaskProps
+    removeTask: (id: number) => void
 }
 
-export function Item({ data }: itemProps) {
+export function Item({ data, removeTask }: itemProps) {
     const [isChecked, SetIsChecked] = useState(false);
 
     function handleCheckboxClick() {
@@ -34,7 +35,10 @@ export function Item({ data }: itemProps) {
                     {data.text}
                 </p>
 
-                <button className={styles.btnDelete}>
+                <button 
+                    onClick={() => removeTask(data.id)}
+                    className={styles.btnDelete}
+                >
                     <Trash size={16} />
                 </button>
             </div>
